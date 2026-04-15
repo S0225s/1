@@ -1,0 +1,7 @@
+services:
+  nexus-ai-local:
+    build: .
+    container_name: nexus-ai-local
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
