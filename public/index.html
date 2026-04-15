@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS AI - 用户画像与概念图引擎</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">NEXUS AI</div>
+    <nav>
+      <a class="active" href="#">系统首页</a>
+      <a href="#">模型训练</a>
+      <a href="#">语义数据库</a>
+      <a href="#">生成历史</a>
+    </nav>
+  </header>
+
+  <main class="dashboard">
+    <section class="panel input-panel">
+      <h2>原始数据注入</h2>
+      <input id="files" type="file" multiple />
+      <textarea id="userText" placeholder="可直接粘贴用户访谈、问卷、评论、社媒语料... "></textarea>
+
+      <h3>API 配置（网页内集成）</h3>
+      <div class="grid-2">
+        <input id="baseUrl" placeholder="Base URL，例如 https://api.openai.com/v1" value="https://api.openai.com/v1" />
+        <input id="apiKey" type="password" placeholder="API Key" />
+        <input id="model" placeholder="聊天模型，例如 gpt-4o-mini" value="gpt-4o-mini" />
+        <input id="imageModel" placeholder="图像模型，例如 gpt-image-1" value="gpt-image-1" />
+      </div>
+
+      <h3>画像提示词模板</h3>
+      <textarea id="promptTemplate">你是资深用户研究专家。请根据输入内容生成一份结构化用户画像，包含：角色名称、核心标签、动机、行为偏好、痛点、购买决策因素、风格倾向（如高级感/年轻活力）。</textarea>
+
+      <h3>设计语义映射矩阵（JSON）</h3>
+      <textarea id="mappingMatrix">{
+  "高级感": {
+    "功能语义": { "智能": 0.93, "自动化": 0.81, "精准控制": 0.77 },
+    "色彩语义": { "黑白": 0.95, "深灰": 0.82, "金属银": 0.74 }
+  },
+  "年轻活力": {
+    "功能语义": { "社交互动": 0.86, "游戏化": 0.73, "便携": 0.69 },
+    "色彩语义": { "明黄": 0.84, "湖蓝": 0.80, "霓虹渐变": 0.78 }
+  }
+}</textarea>
+
+      <button id="generateBtn">重新生成</button>
+      <p class="hint">支持 TXT / MD / JSON / CSV / XLSX / DOCX / PDF 多格式上传。</p>
+    </section>
+
+    <section class="panel profile-panel">
+      <h2>核心用户画像</h2>
+      <pre id="profileText" class="output">等待生成...</pre>
+      <div class="tags" id="mappingTags"></div>
+
+      <h2>设计语义补充</h2>
+      <pre id="supplement" class="output"></pre>
+
+      <h2>概念图提示词</h2>
+      <pre id="conceptPrompt" class="output"></pre>
+    </section>
+
+    <section class="panel image-panel">
+      <h2>AI 概念图实验室</h2>
+      <img id="conceptImage" alt="概念图" />
+      <p id="status">状态：就绪</p>
+      <details>
+        <summary>调用详情</summary>
+        <pre id="rawResult" class="output"></pre>
+      </details>
+    </section>
+  </main>
+
+  <footer class="deploy">
+    <span>一键部署启动：</span>
+    <code>docker compose up --build</code>
+    <span>（或本地 Node 启动：npm install && npm start）</span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
